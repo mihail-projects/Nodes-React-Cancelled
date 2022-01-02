@@ -1,0 +1,93 @@
+#topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(3px);
+}
+
+#logo {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  padding-top: 2px;
+  height: 35px;
+  width: 120px;
+  text-align: center;
+  font-family: Adam-Medium;
+  font-size: 35px;
+  border-right: 1px solid white;
+  color: white;
+  text-shadow: 1px 0px 5px #ffffff50, -1px 0px 5px #ffffff50, 0px 1px 5px #ffffff50, 0px -1px 5px #ffffff50;
+}
+
+#name {
+  position: absolute;
+  top: 7px;
+  left: 155px;
+  height: 60px;
+  width: fit-content;
+  text-align: center;
+  font-family: Adam-Medium;
+  font-size: 25px;
+  padding-top: 14px;
+  color: white;
+}
+
+#docs {
+  position: absolute;
+  top: 15px;
+  right: 80px;
+  height: 26px;
+  width: 26px;
+}
+#docs:hover {
+  animation: scaleIn 0.5s ease-out forwards alternate;
+}
+#docs:not(:hover) {
+  animation: scaleOut 0.5s ease-out forwards alternate;
+}
+
+#settings {
+  position: absolute;
+  top: 17px;
+  right: 30px;
+  height: 25px;
+  width: 25px;
+}
+#settings:hover {
+  animation: scaleIn 0.5s ease-out forwards alternate;
+}
+#settings:not(:hover) {
+  animation: scaleOut 0.5s ease-out forwards alternate;
+  animation: rotating 30s linear infinite;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes scaleIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+@keyframes scaleOut {
+  from {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/*# sourceMappingURL=TopBar.css.map */

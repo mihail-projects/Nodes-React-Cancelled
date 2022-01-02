@@ -1,0 +1,27 @@
+/*#node
+ * position: absolute
+ * padding: 30px
+ * height: 150px
+ * cursor: move
+ * text-align: center
+ * color: #d3d3d3
+ * border-radius: 30px
+ * border: 1px solid #d3d3d3
+ * background: rgba(0, 0, 0, 0.5)*/
+#node {
+  position: absolute;
+  padding: 30px;
+  height: 150px;
+  cursor: move;
+  text-align: center;
+  color: #d3d3d3;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #323232, #232323);
+  box-shadow: 7px 7px 16px #191919, -7px -7px 16px #3e3e3e;
+  border: 0.1px solid rgba(255, 255, 255, 0.1);
+}
+#node:active {
+  background: linear-gradient(145deg, #232323, #323232);
+}
+
+/*# sourceMappingURL=Node.css.map */

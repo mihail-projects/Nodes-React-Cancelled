@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+/*#bg
+ * background-color: #292929
+ * width: 100vw
+ * height: 100vh*/
+#bg {
+  background-color: #323232;
+  width: 100vw;
+  height: 100vh;
+}
+
+/*# sourceMappingURL=App.css.map */
