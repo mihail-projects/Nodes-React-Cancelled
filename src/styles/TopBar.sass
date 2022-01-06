@@ -4,35 +4,40 @@
     left: 0
     width: 100vw
     height: 60px
-    background-color: rgba(255, 255, 255, 0.3)
+    background-color: rgba(211, 211, 211, 0.2)
     backdrop-filter: blur(3px)
+    border-bottom: 0.1px solid rgba(211, 211, 211, .3)
 
 #logo
     position: absolute
     top: 12px
-    left: 20px
+    left: 10px
     padding-top: 2px
     height: 35px
     width: 120px
     text-align: center
     font-family: Adam-Medium
     font-size: 35px
-    border-right: 1px solid white
-    color: white
-    text-shadow: 1px 0px 5px #ffffff50, -1px 0px 5px #ffffff50, 0px 1px 5px #ffffff50, 0px -1px 5px #ffffff50
+    border-right: 1px solid #d3d3d3
+    color: #d3d3d3
+    text-shadow: 1px 0px 5px #d3d3d380, -1px 0px 5px #d3d3d380, 0px 1px 5px #d3d3d380, 0px -1px 5px #d3d3d380
+    &:hover
+        cursor: default
 
 #name
     position: absolute
     top: 7px
-    left: 155px
+    left: 150px
     height: 60px
     width: fit-content
     text-align: center
     font-family: Adam-Medium
     font-size: 25px
     padding-top: 14px
-    color: white
-
+    color: #d3d3d3
+    &:hover
+        cursor: default
+        
 #docs
     position: absolute
     top: 15px
@@ -40,9 +45,10 @@
     height: 26px
     width: 26px
     &:hover
-        animation: scaleIn 0.5s ease-out forwards alternate
+        animation: scaleIn 0.15s ease-out forwards alternate
+        cursor: pointer
     &:not(:hover)
-        animation: scaleOut 0.5s ease-out forwards alternate
+        animation: scaleOut 0.15s ease-out forwards alternate
 
 #settings
     position: absolute
@@ -51,16 +57,10 @@
     height: 25px
     width: 25px
     &:hover
-        animation: scaleIn 0.5s ease-out forwards alternate
+        animation: scaleIn 0.15s ease-out forwards alternate
+        cursor: pointer
     &:not(:hover)
-        animation: scaleOut 0.5s ease-out forwards alternate
-        animation: rotating 30s linear infinite
-
-@keyframes rotating 
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
+        animation: scaleOut 0.15s ease-out forwards alternate
 
 @keyframes scaleIn
     from
@@ -68,7 +68,7 @@
     to
         transform: scale(1.5)
 
-@keyframes scaleOut 
+@keyframes scaleOut
     from
         transform: scale(1.5)
     to

@@ -1,0 +1,18 @@
+#menu {
+  position: absolute;
+  background: linear-gradient(145deg, #323232, #232323);
+  border: 0.1px solid #d3d3d333;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#option {
+  color: #d3d3d3;
+  padding: 0px;
+  font-size: 14px;
+}
+#option:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=ContextMenu.css.map */
