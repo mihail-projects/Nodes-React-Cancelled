@@ -1,80 +1,58 @@
-import { useEffect, useState, useRef } from 'react'
+/* eslint-disable react/jsx-key */
+import React, { useEffect, useState, MouseEvent, KeyboardEvent } from 'react'
 import '../styles/App.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import Node from './Node'
 import TopBar from './TopBar'
 import ContextMenu from './ContextMenu'
-
-interface props {
-  title: string,
-  posX: number,
-  posY: number,
-  properties: {
-    name: string
-    leftC: boolean
-    rightC: boolean
-  }[]
-}
+import nodeProps from './nodeProps'
 
 function App() {
 
   const [xPos, setxPos] = useState(0)
   const [yPos, setyPos] = useState(0)
   const [show, setShow] = useState(false)
+  const [nodesProps, setNodesProps] = useState<nodeProps[]>([])
+  const [selected, setSelected] = useState(-1)
 
-  let nodesProps = useRef<props[]>([])
+  const addNode = (nodeProps: nodeProps) => {
+    nodeProps.id = Math.floor(Math.random() * 1000)
+    nodeProps.posX = xPos
+    nodeProps.posY = yPos
+    nodeProps.select = setSelected
+    setNodesProps([...nodesProps, nodeProps])
+  }
 
-  const addNode = (props: props) => {
-    nodesProps.current = [...nodesProps.current, props]
+  const removeNode = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Delete' && selected !== -1) {
+      setNodesProps(nodesProps.filter(prop => prop.id !== selected))
+    }
   }
 
   useEffect(() => {
-
-    const addNodeSQL = (props: props) => {
-      nodesProps.current = [...nodesProps.current, props]
-    }
-
     //sql
-    addNodeSQL({ title: 'Smth', properties: [{ name: 'wtv', leftC: true, rightC: false }], posX: 100, posY: 100 })
-
   }, [])
 
-  useEffect(() => {
-
-    const update = (e: MouseEvent) => {
-      if (!show) {
-        setxPos(e.x)
-        setyPos(e.y)
-      }
+  const mousePosition = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    if (!show) {
+      setxPos(e.clientX)
+      setyPos(e.clientY)
     }
+  }
 
-    const handleClick = (e: Event) => {
+  const click = () => {
+    setShow(false)
+  }
 
-      e.preventDefault()
-
-      if (e.type === 'click') {
-        setShow(false)
-      } else if (e.type === 'contextmenu') {
-        setShow(true)
-      }
-
-    }
-
-    window.addEventListener('mousemove', update)
-    window.addEventListener('click', handleClick)
-    window.addEventListener('contextmenu', handleClick)
-
-    return () => {
-      window.removeEventListener('mousemove', update)
-      window.removeEventListener('click', handleClick)
-      window.removeEventListener('contextmenu', handleClick)
-    }
-
-  }, [show, xPos, yPos])
+  const rightClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setShow(true)
+  }
 
   return (
 
-    <div id='bg'>
+    <div id='bg' tabIndex={0} onMouseMove={mousePosition} onClick={click} onContextMenu={rightClick} onKeyUp={e => removeNode(e)}>
 
       <TransformWrapper
         pinch={{ disabled: true }}
@@ -87,13 +65,13 @@ function App() {
 
         <TransformComponent>
           <div id='bg'>
-            {nodesProps.current.map(props => { return (<Node {...props} />) })}
+            {nodesProps.map(nodeProps => { return (<Node {...nodeProps} />) })}
           </div>
         </TransformComponent>
 
       </TransformWrapper>
 
-      <ContextMenu show={show} xPos={xPos} yPos={yPos} func={addNode} />
+      <ContextMenu show={show} xPos={xPos} yPos={yPos} add={addNode} />
       <TopBar projectName='Project Name' />
 
     </div>

@@ -1,22 +1,25 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable @typescript-eslint/ban-types */
 import { useEffect, useState } from 'react'
 import '../styles/ContextMenu.css'
+import {templates} from './templates'
 
-type props = {
+interface menuProps {
     show: boolean
     xPos: number
     yPos: number
-    func: Function
+    add: Function
 }
 
-function ContextMenu({ show, xPos, yPos, func }: props) {
+function ContextMenu({ show, xPos, yPos, add }: menuProps) {
 
     const [showUI, setShowUI] = useState(false)
     const [showFunc, setShowFunc] = useState(false)
 
     useEffect(() => {
-        window.addEventListener('click', () => setShowUI(false))
+        window.addEventListener('click', () => change(false, false))
         return () => {
-            window.removeEventListener('click', () => setShowFunc(false))
+            window.removeEventListener('click', () => change(false, false))
         }
     }, [])
 
@@ -33,21 +36,21 @@ function ContextMenu({ show, xPos, yPos, func }: props) {
                     <div id='option' onMouseOver={() => change(false, true)} style={{ paddingTop: '5px' }}>Function ➤</div>
                 </div>
                 <div id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: yPos + 'px', left: xPos + 100 + 'px' }}>
-                    <div id='option' onClick={() => func('If')}>If</div>
-                    <div id='option' onClick={() => func('For')} style={{ paddingTop: '5px' }}>For</div>
-                    <div id='option' onClick={() => func('Class')} style={{ paddingTop: '5px' }}>Class</div>
-                    <div id='option' onClick={() => func('Compare')} style={{ paddingTop: '5px' }}>Compare</div>
-                    <div id='option' onClick={() => func('SetVariable')} style={{ paddingTop: '5px' }}>SetVariable</div>
-                    <div id='option' onClick={() => func('HttpRequest')} style={{ paddingTop: '5px' }}>HttpRequest</div>
-                    <div id='option' onClick={() => func('GroupToFunction')} style={{ paddingTop: '5px' }}>GroupToFunction</div>
+                    <div id='option' onClick={() => add(templates[0].ifTemplate)}>If</div>
+                    <div id='option' onClick={() => add(templates[1].forTemplate)} style={{ paddingTop: '5px' }}>For</div>
+                    <div id='option' onClick={() => add(templates[2].classTemplate)} style={{ paddingTop: '5px' }}>Class</div>
+                    <div id='option' onClick={() => add(templates[3].compareTemplate)} style={{ paddingTop: '5px' }}>Compare</div>
+                    <div id='option' onClick={() => add(templates[4].setVariableTemplate)} style={{ paddingTop: '5px' }}>SetVariable</div>
+                    <div id='option' onClick={() => add(templates[5].httpReqTemplate)} style={{ paddingTop: '5px' }}>HttpRequest</div>
+                    <div id='option' onClick={() => add(templates[6].functionTemplate)} style={{ paddingTop: '5px' }}>GroupToFunction</div>
                 </div>
                 <div id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 100 + 'px' }}>
-                    <div id='option' onClick={() => func('Text')}>Text</div>
-                    <div id='option' onClick={() => func('Event')} style={{ paddingTop: '5px' }}>Event</div>
-                    <div id='option' onClick={() => func('Media')} style={{ paddingTop: '5px' }}>Media</div>
-                    <div id='option' onClick={() => func('Tween')} style={{ paddingTop: '5px' }}>Tween</div>
-                    <div id='option' onClick={() => func('Container')} style={{ paddingTop: '5px' }}>Container</div>
-                    <div id='option' onClick={() => func('QuatradicArray')} style={{ paddingTop: '5px' }}>QuatradicArray</div>
+                    <div id='option' onClick={() => add(templates[7].textTemplate)}>Text</div>
+                    <div id='option' onClick={() => add(templates[8].eventTemplate)} style={{ paddingTop: '5px' }}>Event</div>
+                    <div id='option' onClick={() => add(templates[9].mediaTemplate)} style={{ paddingTop: '5px' }}>Media</div>
+                    <div id='option' onClick={() => add(templates[10].tweenTemplate)} style={{ paddingTop: '5px' }}>Tween</div>
+                    <div id='option' onClick={() => add(templates[12].containerTemplate)} style={{ paddingTop: '5px' }}>Container</div>
+                    <div id='option' onClick={() => add(templates[13].qArrayTemplate)} style={{ paddingTop: '5px' }}>QuatradicArray</div>
                 </div>
             </>
         )

@@ -6,12 +6,12 @@
   text-align: center;
   color: #d3d3d3;
   border-radius: 25px;
-  background: linear-gradient(145deg, #323232, #232323);
-  box-shadow: 7px 7px 16px #191919, -7px -7px 16px #3e3e3e;
-  border: 0.1px solid #d3d3d333;
+  background: linear-gradient(145deg, #323232, #202124);
+  box-shadow: -3px 3px 16px #141414;
+  border: 0.1px solid #d3d3d330;
 }
-#node:active {
-  background: linear-gradient(145deg, #232323, #323232);
+#node:hover {
+  border: 0.1px solid #d3d3d370;
 }
 
 #title {
@@ -19,7 +19,7 @@
   margin-left: -25px;
   height: 25px;
   padding-top: 1px;
-  background-color: #d3d3d333;
+  background-color: #35363a;
   border-top-left-radius: 23px;
   border-top-right-radius: 23px;
   overflow-wrap: break-word;
@@ -44,5 +44,18 @@
 #connector:hover {
   cursor: pointer;
 }
+
+/*#remove
+ * position: absolute
+ * left: 0
+ * right: 0
+ * top: -35px
+ * margin-left: auto
+ * margin-right: auto
+ * border-radius: 15px
+ * border: 1px solid #d3d3d380
+ * color: #d3d3d380
+ * width: 27px
+ * padding-bottom: 4px*/
 
 /*# sourceMappingURL=Node.css.map */

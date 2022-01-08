@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import '../styles/TopBar.css'
 import '../styles/Fonts.css'
 import cog from '../Media/cog.png';
@@ -5,11 +6,11 @@ import book from '../Media/book.png';
 import { useState } from 'react';
 import Settings from './Settings';
 
-type props = {
+type topBarProps = {
     projectName: string
 }
 
-function TopBar({ projectName }: props) {
+function TopBar({ projectName }: topBarProps) {
 
     const [showSettings, setShowSettings] = useState(false);
 
