@@ -1,15 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable @typescript-eslint/ban-types */
-import { useEffect, useState } from 'react'
 import '../styles/ContextMenu.css'
-import {templates} from './templates'
-
-interface menuProps {
-    show: boolean
-    xPos: number
-    yPos: number
-    add: Function
-}
+import { useEffect, useState } from 'react'
+import {menuProps, templates} from './templates'
 
 function ContextMenu({ show, xPos, yPos, add }: menuProps) {
 
