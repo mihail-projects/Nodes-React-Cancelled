@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
-import '../styles/Settings.css'
-import '../styles/Fonts.css'
+import '../Styles/Settings.css'
+import '../Styles/Fonts.css'
 
 type settingsProps = {
     show: boolean

@@ -1,12 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import ReactDOM from 'react-dom';
-import './styles/index.css';
-import App from './components/App';
-import reportWebVitals from './rest bs/reportWebVitals';
+import './Styles/index.css';
+import App from './Components/App';
+import reportWebVitals from './Rest/reportWebVitals';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+//reportWebVitals(console.log);

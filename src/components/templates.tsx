@@ -53,6 +53,7 @@ export const templates = [
             properties: [
                 { name: 'wtv', leftC: false, rightC: false },
             ]
+
         }
     },
     {
@@ -127,12 +128,4 @@ export const templates = [
             ]
         }
     },
-    {
-        qArrayTemplate: {
-            title: '1x4 Array',
-            properties: [
-                { name: 'wtv', leftC: false, rightC: false },
-            ]
-        }
-    }
 ]

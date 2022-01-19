@@ -1,10 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
-import '../styles/TopBar.css'
-import '../styles/Fonts.css'
+import '../Styles/TopBar.css'
+import '../Styles/Fonts.css'
 import cog from '../Media/cog.png';
-import book from '../Media/book.png';
-import { useState } from 'react';
+import docs from '../Media/docs.png';
+import account from '../Media/account.png';
 import Settings from './Settings';
+import { useState } from 'react';
 
 type topBarProps = {
     projectName: string
@@ -17,11 +18,13 @@ function TopBar({ projectName }: topBarProps) {
     return (
         <>
             <Settings show={showSettings} />
-            <div id='topbar'>
-                <div id='logo'>Node.</div>
-                <div id='name'><i>{projectName}</i></div>
-                <img id='docs' src={book} onClick={() => window.open("/docs", "_blank")} />
+            <div id='topbarLeft'>
+                <img id='account' src={account} onClick={() => null} />
+                <img id='docs' src={docs} onClick={() => window.open("/docs", "_blank")} />
                 <img id='settings' src={cog} onClick={() => setShowSettings(!showSettings)} />
+            </div>
+            <div id='topbarCenter'>
+                <div id='name'><i>{projectName}</i></div>
             </div>
         </>
     )

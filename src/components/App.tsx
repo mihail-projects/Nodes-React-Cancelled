@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState, MouseEvent, KeyboardEvent } from 'react'
-import '../styles/App.css'
+import '../Styles/App.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import Node from './Node'
 import TopBar from './TopBar'
@@ -63,7 +63,7 @@ function App() {
   }
 
   const addLine = (id: string) => {
-    
+
     setPanning(true)
     setWheel(true)
 
@@ -72,8 +72,8 @@ function App() {
     const temp = lines
 
     temp.push({
-      x1: Math.round(document.getElementById(id)!.getBoundingClientRect().left+10),
-      y1: Math.round(document.getElementById(id)!.getBoundingClientRect().top-75),
+      x1: Math.round(document.getElementById(id)!.getBoundingClientRect().left + 10),
+      y1: Math.round(document.getElementById(id)!.getBoundingClientRect().top - 75),
       x2: -1,
       y2: -1
     })
@@ -84,7 +84,7 @@ function App() {
 
   const removeLine = () => {
     const temp = lines
-    temp.forEach((element, index) => { if (element.x1 == Math.round(document.getElementById(currentLine)!.getBoundingClientRect().left+10)) temp.splice(index, 1) })
+    temp.forEach((element, index) => { if (element.x1 == Math.round(document.getElementById(currentLine)!.getBoundingClientRect().left + 10)) temp.splice(index, 1) })
     setCurrentLine('')
     setPanning(false)
     setWheel(false)
@@ -93,6 +93,9 @@ function App() {
   const connect = () => {
     setPanning(false)
     setWheel(false)
+
+    
+
   }
 
   return (

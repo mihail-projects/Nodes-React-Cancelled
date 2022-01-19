@@ -1,8 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable @typescript-eslint/ban-types */
-import '../styles/ContextMenu.css'
+import '../Styles/ContextMenu.css'
 import { useEffect, useState } from 'react'
-import {menuProps, templates} from './templates'
+import { menuProps, templates } from './templates'
 
 function ContextMenu({ show, xPos, yPos, add }: menuProps) {
 
@@ -29,6 +29,13 @@ function ContextMenu({ show, xPos, yPos, add }: menuProps) {
                     <div id='option' onMouseOver={() => change(false, true)} style={{ paddingTop: '5px' }}>Function ➤</div>
                 </div>
                 <div id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: yPos + 'px', left: xPos + 100 + 'px' }}>
+                    <div id='option' onClick={() => add(templates[7].textTemplate)}>Text</div>
+                    <div id='option' onClick={() => add(templates[8].eventTemplate)} style={{ paddingTop: '5px' }}>Event</div>
+                    <div id='option' onClick={() => add(templates[9].mediaTemplate)} style={{ paddingTop: '5px' }}>Media</div>
+                    <div id='option' onClick={() => add(templates[10].tweenTemplate)} style={{ paddingTop: '5px' }}>Tween</div>
+                    <div id='option' onClick={() => add(templates[12].containerTemplate)} style={{ paddingTop: '5px' }}>Container</div>
+                </div>
+                <div id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 100 + 'px' }}>
                     <div id='option' onClick={() => add(templates[0].ifTemplate)}>If</div>
                     <div id='option' onClick={() => add(templates[1].forTemplate)} style={{ paddingTop: '5px' }}>For</div>
                     <div id='option' onClick={() => add(templates[2].classTemplate)} style={{ paddingTop: '5px' }}>Class</div>
@@ -36,14 +43,6 @@ function ContextMenu({ show, xPos, yPos, add }: menuProps) {
                     <div id='option' onClick={() => add(templates[4].setVariableTemplate)} style={{ paddingTop: '5px' }}>SetVariable</div>
                     <div id='option' onClick={() => add(templates[5].httpReqTemplate)} style={{ paddingTop: '5px' }}>HttpRequest</div>
                     <div id='option' onClick={() => add(templates[6].functionTemplate)} style={{ paddingTop: '5px' }}>GroupToFunction</div>
-                </div>
-                <div id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 100 + 'px' }}>
-                    <div id='option' onClick={() => add(templates[7].textTemplate)}>Text</div>
-                    <div id='option' onClick={() => add(templates[8].eventTemplate)} style={{ paddingTop: '5px' }}>Event</div>
-                    <div id='option' onClick={() => add(templates[9].mediaTemplate)} style={{ paddingTop: '5px' }}>Media</div>
-                    <div id='option' onClick={() => add(templates[10].tweenTemplate)} style={{ paddingTop: '5px' }}>Tween</div>
-                    <div id='option' onClick={() => add(templates[12].containerTemplate)} style={{ paddingTop: '5px' }}>Container</div>
-                    <div id='option' onClick={() => add(templates[13].qArrayTemplate)} style={{ paddingTop: '5px' }}>QuatradicArray</div>
                 </div>
             </>
         )
