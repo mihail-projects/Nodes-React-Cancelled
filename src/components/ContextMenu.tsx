@@ -3,6 +3,8 @@
 import '../Styles/ContextMenu.css'
 import { useEffect, useState } from 'react'
 import { menuProps, templates } from './templates'
+import { Paper } from '@mui/material'
+import { Typography } from '@mui/material';
 
 function ContextMenu({ show, xPos, yPos, add }: menuProps) {
 
@@ -24,26 +26,26 @@ function ContextMenu({ show, xPos, yPos, add }: menuProps) {
     if (show) {
         return (
             <>
-                <div id='menu' style={{ top: yPos + 'px', left: xPos + 'px' }}>
-                    <div id='option' onMouseOver={() => change(true, false)} >Interface ➤</div>
-                    <div id='option' onMouseOver={() => change(false, true)} style={{ paddingTop: '5px' }}>Function ➤</div>
-                </div>
-                <div id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: yPos + 'px', left: xPos + 100 + 'px' }}>
-                    <div id='option' onClick={() => add(templates[7].textTemplate)}>Text</div>
-                    <div id='option' onClick={() => add(templates[8].eventTemplate)} style={{ paddingTop: '5px' }}>Event</div>
-                    <div id='option' onClick={() => add(templates[9].mediaTemplate)} style={{ paddingTop: '5px' }}>Media</div>
-                    <div id='option' onClick={() => add(templates[10].tweenTemplate)} style={{ paddingTop: '5px' }}>Tween</div>
-                    <div id='option' onClick={() => add(templates[12].containerTemplate)} style={{ paddingTop: '5px' }}>Container</div>
-                </div>
-                <div id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 100 + 'px' }}>
-                    <div id='option' onClick={() => add(templates[0].ifTemplate)}>If</div>
-                    <div id='option' onClick={() => add(templates[1].forTemplate)} style={{ paddingTop: '5px' }}>For</div>
-                    <div id='option' onClick={() => add(templates[2].classTemplate)} style={{ paddingTop: '5px' }}>Class</div>
-                    <div id='option' onClick={() => add(templates[3].compareTemplate)} style={{ paddingTop: '5px' }}>Compare</div>
-                    <div id='option' onClick={() => add(templates[4].setVariableTemplate)} style={{ paddingTop: '5px' }}>SetVariable</div>
-                    <div id='option' onClick={() => add(templates[5].httpReqTemplate)} style={{ paddingTop: '5px' }}>HttpRequest</div>
-                    <div id='option' onClick={() => add(templates[6].functionTemplate)} style={{ paddingTop: '5px' }}>GroupToFunction</div>
-                </div>
+                <Paper id='menu' style={{ top: yPos + 'px', left: xPos + 'px' }}>
+                    <Typography id='option' variant="subtitle2" color='primary' onMouseOver={() => change(true, false)}>Interface ➤</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onMouseOver={() => change(false, true)}>Functionality ➤</Typography>
+                </Paper>
+                <Paper id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: yPos + 'px', left: xPos + 125 + 'px' }}>
+                    <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[7].textTemplate)}>Text</Typography>
+                    <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[8].eventTemplate)}>Event</Typography>
+                    <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[9].mediaTemplate)}>Media</Typography>
+                    <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[10].tweenTemplate)}>Tween</Typography>
+                    <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[12].containerTemplate)}>Container</Typography>
+                </Paper>
+                <Paper id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 125 + 'px' }}>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[0].ifTemplate)}>If</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[1].forTemplate)}>For</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[2].classTemplate)}>Class</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[3].compareTemplate)}>Compare</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[4].setVariableTemplate)}>SetVariable</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[5].httpReqTemplate)}>HttpRequest</Typography>
+                    <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[6].functionTemplate)}>GroupToFunction</Typography>
+                </Paper>
             </>
         )
     } else return null

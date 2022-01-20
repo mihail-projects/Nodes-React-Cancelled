@@ -36,6 +36,7 @@ export const templates = [
             properties: [
                 { name: 'wtv', leftC: false, rightC: false },
                 { name: 'wtv', leftC: false, rightC: false },
+                { name: 'wtv', leftC: false, rightC: false },
             ]
         }
     },

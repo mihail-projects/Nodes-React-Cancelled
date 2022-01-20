@@ -72,8 +72,8 @@ function App() {
     const temp = lines
 
     temp.push({
-      x1: Math.round(document.getElementById(id)!.getBoundingClientRect().left + 10),
-      y1: Math.round(document.getElementById(id)!.getBoundingClientRect().top - 75),
+      x1: Math.round(document.getElementById(id)!.getBoundingClientRect().left + 5),
+      y1: Math.round(document.getElementById(id)!.getBoundingClientRect().top - 60),
       x2: -1,
       y2: -1
     })
@@ -94,8 +94,8 @@ function App() {
     setPanning(false)
     setWheel(false)
 
-    
 
+    
   }
 
   return (
