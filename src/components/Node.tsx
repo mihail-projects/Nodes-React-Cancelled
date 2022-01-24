@@ -1,58 +1,73 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable react/react-in-jsx-scope */
 import '../Styles/Node.css'
-import '../Styles/Fonts.css'
-import Draggable from 'react-draggable'
-import { nodeProps } from './templates'
-import { Divider, Paper, Typography, useTheme } from '@mui/material'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import useTheme from '@mui/material/styles/useTheme'
+import Draggable from './Draggable'
+import { Component, useState } from 'react'
 
-function Node(props: nodeProps) {
+type NodeProps = {
+    id: number
+    title: string
+    mousePos: number[]
+    properties: {
+        component: Component
+        leftC: boolean
+        rightC: boolean
+        topCode: string
+        bottomCode: string
+    }[]
+    select: Function
+    newLine: Function
+    connect: Function
+}
+
+function Node(props: NodeProps) {
 
     const theme = useTheme();
+    const [drag, setDrag] = useState(false)
 
     return (
 
-        <Draggable handle='.handle' defaultPosition={{ x: props.posX, y: props.posY }}>
+        <Draggable drag={drag} mousePos={props.mousePos}>
 
             <Paper id='node' onMouseOver={() => props.select(props.id)} onMouseOut={() => props.select(-1)}>
 
-                <Typography id='title' className='handle' variant="subtitle1" color='text.primary'>{props.title}</Typography>
-                <Divider />
+                <Typography id='title' variant="subtitle1" color='text.primary' onMouseDown={() => setDrag(true)} onMouseUp={() => setDrag(false)} onMouseOver={() => console.log('aaa')} onMouseOut={() => console.log('sss')}>{props.title}</Typography>
 
-                {props.properties.map((element: { name: string, leftC: boolean, rightC: boolean }, index: number) => {
+                {props.properties.map((element, index) => (
 
-                    return (
+                    <div id='property' key={index}>
 
-                        <div key={index} id='property'>
+                        <div
+                            id={props.id + '-' + (index * 2).toString()}
+                            className='connector'
+                            onClick={() => props.connect(props.id + '-' + (index * 2).toString())}
+                            style={{
+                                left: '-20px',
+                                border: element.leftC ? '2px solid ' + theme.palette.primary.main : '2px solid ' + theme.palette.secondary.main,
+                                backgroundColor: element.leftC ? theme.palette.primary.dark : theme.palette.secondary.dark
+                            }}
+                        />
 
-                            <Typography color='text.secondary' style={index == 0 ? { paddingTop: '5px' } : {}}>{element.name}</Typography>
+                        {element.component}
 
-                            <div
-                                id={(index * 2).toString()}
-                                className='connector'
-                                onMouseUp={() => props.connect((index * 2).toString())}
-                                style={{
-                                    top: (index * 20 + 45) + 'px', left: '-20px',
-                                    border: element.rightC ? '2px solid ' + theme.palette.primary.main : '2px solid ' + theme.palette.secondary.main,
-                                    backgroundColor: element.rightC ? theme.palette.primary.dark : theme.palette.secondary.dark
-                                }}
-                            />
+                        <div
+                            id={props.id + '-' + (index * 2 + 1).toString()}
+                            className='connector'
+                            onClick={() => props.newLine(props.id + '-' + (index * 2 + 1).toString())}
+                            style={{
+                                right: '-20px',
+                                border: element.rightC ? '2px solid ' + theme.palette.primary.main : '2px solid ' + theme.palette.secondary.main,
+                                backgroundColor: element.rightC ? theme.palette.primary.dark : theme.palette.secondary.dark
+                            }}
+                        />
 
-                            <div
-                                id={(index * 2 + 1).toString()}
-                                className='connector'
-                                onMouseDown={() => props.addLine((index * 2 + 1).toString())}
-                                style={{
-                                    top: (index * 20 + 45) + 'px', right: '-20px',
-                                    border: element.rightC ? '2px solid ' + theme.palette.primary.main : '2px solid ' + theme.palette.secondary.main,
-                                    backgroundColor: element.rightC ? theme.palette.primary.dark : theme.palette.secondary.dark
-                                }}
-                            />
+                    </div>
 
-                        </div>
 
-                    )
-
-                })}
+                ))}
 
             </Paper>
 

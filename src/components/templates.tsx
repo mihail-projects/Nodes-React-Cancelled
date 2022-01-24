@@ -1,42 +1,13 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable react/react-in-jsx-scope */
 
-export interface menuProps {
-    show: boolean
-    xPos: number
-    yPos: number
-    add: Function
-}
-
-export interface coordinates {
-    x1: number | undefined
-    y1: number | undefined
-    x2: number | undefined
-    y2: number | undefined
-}
-
-export interface nodeProps {
-    id: number
-    title: string
-    posX: number
-    posY: number
-    properties: {
-        name: string
-        leftC: boolean
-        rightC: boolean
-    }[]
-    select: Function
-    addLine: Function
-    connect: Function
-}
+import Text from './properties/Text'
 
 export const templates = [
     {
         ifTemplate: {
             title: 'Condition',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
-                { name: 'wtv', leftC: false, rightC: false },
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -44,7 +15,8 @@ export const templates = [
         forTemplate: {
             title: 'Loop',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ],
         }
     },
@@ -52,7 +24,7 @@ export const templates = [
         classTemplate: {
             title: 'Class',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
 
         }
@@ -61,7 +33,7 @@ export const templates = [
         compareTemplate: {
             title: 'Comparison',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -69,7 +41,7 @@ export const templates = [
         setVariableTemplate: {
             title: 'Variable',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -77,7 +49,7 @@ export const templates = [
         httpReqTemplate: {
             title: 'HTTP Request',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -85,15 +57,16 @@ export const templates = [
         functionTemplate: {
             title: 'Function',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
     {
         textTemplate: {
+            id: undefined,
             title: 'Text',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -101,7 +74,7 @@ export const templates = [
         eventTemplate: {
             title: 'Event',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -109,7 +82,7 @@ export const templates = [
         mediaTemplate: {
             title: 'Media',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -117,7 +90,7 @@ export const templates = [
         tweenTemplate: {
             title: 'Tween',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },
@@ -125,7 +98,7 @@ export const templates = [
         containerTemplate: {
             title: 'Container',
             properties: [
-                { name: 'wtv', leftC: false, rightC: false },
+                { component: <Text />, leftC: false, rightC: false },
             ]
         }
     },

@@ -9,24 +9,29 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import React from 'react';
+import { green, purple } from '@mui/material/colors';
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#BB86FC'
+            main: purple[300]
         },
         secondary: {
-            main: '#03DAC6'
+            main: green[300]
         }
     },
 })
 
 ReactDOM.render(
-    <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <App />
-    </ThemeProvider>,
+    <React.StrictMode>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <App />
+        </ThemeProvider>
+    </React.StrictMode>
+    ,
     document.getElementById('root')
 )
 

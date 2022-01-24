@@ -1,34 +1,34 @@
 /* eslint-disable react/react-in-jsx-scope */
 import '../Styles/TopBar.css'
-import '../Styles/Fonts.css'
+import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArticleIcon from '@mui/icons-material/Article';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from './Settings';
-import { useState } from 'react';
-import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import AppBar from '@mui/material/AppBar'
+import IconButton from '@mui/material/IconButton'
+import Toolbar from '@mui/material/Toolbar'
+import TextField from '@mui/material/TextField';
 
-type topBarProps = {
+type TopBarProps = {
     projectName: string
 }
 
-function TopBar({ projectName }: topBarProps) {
+function TopBar(props: TopBarProps) {
 
     const [showSettings, setShowSettings] = useState(false);
 
     return (
         <>
             <Settings show={showSettings} />
-            <Box id='bar' sx={{ flexGrow: 1 }}>
-                <AppBar position="static" sx={{ borderRadius: 16 }}>
-                    <Toolbar>
-                        <IconButton id='account' onClick={() => null}><AccountCircleIcon color='primary' /></IconButton>
-                        <IconButton id='settings' onClick={() => setShowSettings(!showSettings)}><SettingsIcon color='primary' /></IconButton>
-                        <IconButton id='docs' onClick={() => window.open("/docs", "_blank")}><ArticleIcon color='primary' /></IconButton>
-                        <Typography id='name' variant="h5" color='secondary'><i>{projectName}</i></Typography>
-                    </Toolbar>
-                </AppBar>
-            </Box>
+            <AppBar id='bar' position="static" sx={{ borderRadius: 16, width: 'fit-content' }}>
+                <Toolbar>
+                    <IconButton id='account' onClick={() => null}><AccountCircleIcon color='primary' /></IconButton>
+                    <IconButton id='settings' onClick={() => setShowSettings(!showSettings)}><SettingsIcon color='primary' /></IconButton>
+                    <IconButton id='docs' onClick={() => window.open("/docs", "_blank")}><ArticleIcon color='primary' /></IconButton>
+                    <TextField defaultValue={props.projectName} placeholder='Project name' margin='none' variant='standard' color={!props.projectName ? 'error' : 'secondary'} sx={{ marginLeft: '15px' }} />
+                </Toolbar>
+            </AppBar>
         </>
     )
 

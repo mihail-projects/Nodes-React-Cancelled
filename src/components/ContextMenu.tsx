@@ -2,11 +2,17 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import '../Styles/ContextMenu.css'
 import { useEffect, useState } from 'react'
-import { menuProps, templates } from './templates'
-import { Paper } from '@mui/material'
-import { Typography } from '@mui/material';
+import {templates} from './templates'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 
-function ContextMenu({ show, xPos, yPos, add }: menuProps) {
+type MenuProps = {
+    show: boolean
+    mousePos: number[]
+    add: Function
+}
+
+function ContextMenu({ show, mousePos, add }: MenuProps) {
 
     const [showUI, setShowUI] = useState(false)
     const [showFunc, setShowFunc] = useState(false)
@@ -18,7 +24,7 @@ function ContextMenu({ show, xPos, yPos, add }: menuProps) {
         }
     }, [])
 
-    const change = (ui: boolean, func: boolean) => {
+    function change(ui: boolean, func: boolean) {
         setShowUI(ui)
         setShowFunc(func)
     }
@@ -26,18 +32,18 @@ function ContextMenu({ show, xPos, yPos, add }: menuProps) {
     if (show) {
         return (
             <>
-                <Paper id='menu' style={{ top: yPos + 'px', left: xPos + 'px' }}>
+                <Paper id='menu' style={{ top: mousePos[1] + 'px', left: mousePos[0] + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='primary' onMouseOver={() => change(true, false)}>Interface ➤</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onMouseOver={() => change(false, true)}>Functionality ➤</Typography>
                 </Paper>
-                <Paper id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: yPos + 'px', left: xPos + 125 + 'px' }}>
+                <Paper id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: mousePos[1] + 'px', left: mousePos[0] + 125 + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[7].textTemplate)}>Text</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[8].eventTemplate)}>Event</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[9].mediaTemplate)}>Media</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[10].tweenTemplate)}>Tween</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => add(templates[12].containerTemplate)}>Container</Typography>
                 </Paper>
-                <Paper id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: yPos + 25 + 'px', left: xPos + 125 + 'px' }}>
+                <Paper id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: mousePos[1] + 25 + 'px', left: mousePos[0] + 125 + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[0].ifTemplate)}>If</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[1].forTemplate)}>For</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => add(templates[2].classTemplate)}>Class</Typography>

@@ -1,7 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import '../Styles/Settings.css'
-import '../Styles/Fonts.css'
-import { Paper } from '@mui/material'
+import Paper from '@mui/material/Paper'
 
 type settingsProps = {
     show: boolean
