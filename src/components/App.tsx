@@ -1,10 +1,11 @@
+/* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/jsx-key */
 import '../Styles/App.css'
 import React, { useEffect, useState, MouseEvent, KeyboardEvent, Component } from 'react'
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
+import useWindowDimensions from './Hooks/Dimensions'
 import TopBar from './TopBar'
 import ContextMenu from './ContextMenu'
 import Line from './Line'
@@ -17,11 +18,11 @@ type NodeProps = {
   title: string
   mousePos: number[]
   properties: {
-      component: Component
-      leftC: boolean
-      rightC: boolean
-      topCode: string
-      bottomCode: string
+    component: Component
+    leftC: boolean
+    rightC: boolean
+    topCode: string
+    bottomCode: string
   }[]
   select: Function
   newLine: Function
@@ -32,11 +33,11 @@ type NodePropsNoSetters = Omit<NodeProps, 'mousePos' | 'select' | 'newLine' | 'c
 
 function App() {
 
-  const [panning, setPanning] = useState(false)
-  const [wheel, setWheel] = useState(false)
+  const [pan, setPan] = useState(false)
 
   const [mousePos, setmousePos] = useState<number[]>([])
   const [show, setShow] = useState(false)
+  const [acceleration, setAcceleration] = useState<number[]>([0, 0])
 
   const [nodesProps, setNodesProps] = useState<NodePropsNoSetters[]>([])
   const [selected, setSelected] = useState(-1)
@@ -45,11 +46,26 @@ function App() {
   const [draggingID, setDraggingID] = useState('')
 
   const theme = useTheme();
+  const { height, width } = useWindowDimensions();
+
+  const panSpeed = 2
 
 
   useEffect(() => {
-    //sql
-  }, [])
+
+    if (pan) {
+      if (mousePos[0] < getPercent(30, width)) {
+        setAcceleration([acceleration[0] - panSpeed, acceleration[1]])
+      } else if (mousePos[0] > width - getPercent(30, width)) {
+        setAcceleration([acceleration[0] + panSpeed, acceleration[1]])
+      } else if (mousePos[1] < getPercent(30, height)) {
+        setAcceleration([acceleration[0], acceleration[1] - panSpeed])
+      } else if (mousePos[1] > height - getPercent(30, height)) {
+        setAcceleration([acceleration[0], acceleration[1] + panSpeed])
+      }
+    }
+
+  })
 
   function newNode(nodeProps: NodePropsNoSetters) {
 
@@ -65,17 +81,30 @@ function App() {
 
   }
 
-  function removeNode(e: KeyboardEvent<HTMLDivElement>) {
+  function keyDown(e: KeyboardEvent<HTMLDivElement>) {
+
+    if (draggingID !== '') return
+
+    if (e.key === 'Shift') {
+      setPan(true)
+    }
+
+  }
+
+  function keyUp(e: KeyboardEvent<HTMLDivElement>) {
+
+    if (draggingID !== '') return
+
     if (e.key === 'Delete' && selected !== -1) {
       setNodesProps(nodesProps.filter(prop => prop.id !== selected))
+    } else if (e.key === 'Shift') {
+      setPan(false)
     }
+
   }
 
   function mousePosition(e: MouseEvent<HTMLDivElement>) {
-    e.preventDefault()
-    if (!show) {
-      setmousePos([e.clientX, e.clientY])
-    }
+    setmousePos([e.clientX, e.clientY])
   }
 
   function click() {
@@ -90,16 +119,12 @@ function App() {
   function newLine(id: string) {
     setDraggingID(id)
     setConnections([...connections, [id, '']])
-    setPanning(true)
-    setWheel(true)
   }
 
   function disconnect() {
     console.log('Disconnected')
     setDraggingID('')
     setConnections(connections.filter(conn => conn[1] != ''))
-    setPanning(false)
-    setWheel(false)
   }
 
   function connect(id: string) {
@@ -127,34 +152,29 @@ function App() {
     )
 
     setDraggingID('')
-    setPanning(false)
-    setWheel(false)
 
   }
 
   return (
     <>
-      {/*<TransformWrapper
-        pinch={{ disabled: true }}
-        doubleClick={{ disabled: true }}
-        panning={{ activationKeys: ['Shift'], velocityDisabled: true, disabled: panning }}
-        wheel={{ disabled: wheel }}
-        initialPositionX={-1}
-        initialPositionY={-1}
-        limitToBounds={false}
-        minScale={.5}
-        maxScale={1.5}>
-
-        <TransformComponent>*/}
 
       <div
+
         id='bg'
         tabIndex={0}
-        style={{ /*border: '1px solid ' + theme.palette.primary.main, */width: '100vw', height: '100vh' }}
+        style={{
+          position: 'absolute',
+          top: acceleration[1],
+          left: acceleration[0],
+          /*border: '1px solid ' + theme.palette.primary.main,*/
+          width: '100vw',
+          height: '100vh',
+        }}
         onMouseMove={mousePosition}
         onClick={click}
         onContextMenu={rightClick}
-        onKeyUp={e => removeNode(e)}>
+        onKeyUp={e => keyUp(e)}
+        onKeyDown={e => keyDown(e)}>
 
         {connections.map((connection, index) => (
           <Line
@@ -163,6 +183,7 @@ function App() {
             id2={connection[1]}
             thickness={2}
             mousePos={mousePos}
+            acceleration={acceleration}
           />
         ))}
 
@@ -179,14 +200,15 @@ function App() {
 
       </div>
 
-      {/*</TransformComponent>
-
-        </TransformWrapper>*/}
-
       <ContextMenu show={show} mousePos={mousePos} add={newNode} />
       <TopBar projectName='Project Name' />
+
     </>
   )
+}
+
+function getPercent(percent: number, value: number) {
+  return (percent * value) / 100
 }
 
 export default App;

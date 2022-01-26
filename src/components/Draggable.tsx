@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable react/no-find-dom-node */
 import React, { useEffect, useState } from 'react'
 
 type DraggableProps = {

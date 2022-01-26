@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable react/react-in-jsx-scope */
 import '../Styles/Node.css'
@@ -5,7 +6,7 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import useTheme from '@mui/material/styles/useTheme'
 import Draggable from './Draggable'
-import { Component, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 
 type NodeProps = {
     id: number
@@ -27,6 +28,12 @@ function Node(props: NodeProps) {
 
     const theme = useTheme();
     const [drag, setDrag] = useState(false)
+    let element = document.getElementById(props.id.toString())!
+
+    useEffect(() => {
+        element = document.getElementById(props.id.toString())!
+        console.log(element)
+    }, [props])
 
     return (
 
