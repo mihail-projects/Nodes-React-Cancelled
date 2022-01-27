@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 type DraggableProps = {
     drag: boolean,
     mousePos: number[],
+    acceleration: number[],
     children: JSX.Element,
 }
 
@@ -22,8 +23,8 @@ function Draggable(props: DraggableProps) {
         <div
             style={{
                 position: 'absolute',
-                top: pos[1]-20,
-                left: pos[0]-75
+                top: pos[1]-props.acceleration[1]-20,
+                left: pos[0]-props.acceleration[0]-75
             }}>
             {props.children}
         </div>

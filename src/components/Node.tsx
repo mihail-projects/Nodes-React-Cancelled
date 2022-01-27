@@ -6,12 +6,13 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import useTheme from '@mui/material/styles/useTheme'
 import Draggable from './Draggable'
-import { Component, useEffect, useState } from 'react'
+import { Component, useState } from 'react'
 
 type NodeProps = {
     id: number
     title: string
     mousePos: number[]
+    acceleration: number[]
     properties: {
         component: Component
         leftC: boolean
@@ -28,20 +29,14 @@ function Node(props: NodeProps) {
 
     const theme = useTheme();
     const [drag, setDrag] = useState(false)
-    let element = document.getElementById(props.id.toString())!
-
-    useEffect(() => {
-        element = document.getElementById(props.id.toString())!
-        console.log(element)
-    }, [props])
 
     return (
 
-        <Draggable drag={drag} mousePos={props.mousePos}>
+        <Draggable drag={drag} mousePos={props.mousePos} acceleration={props.acceleration}>
 
             <Paper id='node' onMouseOver={() => props.select(props.id)} onMouseOut={() => props.select(-1)}>
 
-                <Typography id='title' variant="subtitle1" color='text.primary' onMouseDown={() => setDrag(true)} onMouseUp={() => setDrag(false)} onMouseOver={() => console.log('aaa')} onMouseOut={() => console.log('sss')}>{props.title}</Typography>
+                <Typography id='title' variant="subtitle1" color='text.primary' onMouseDown={() => setDrag(true)} onMouseUp={() => setDrag(false)}>{props.title}</Typography>
 
                 {props.properties.map((element, index) => (
 

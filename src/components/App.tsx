@@ -12,6 +12,7 @@ import Line from './Line'
 import Node from './Node'
 import useTheme from '@mui/material/styles/useTheme'
 import produce from 'immer'
+import useMobileDetect from './Hooks/DetectDevice';
 
 type NodeProps = {
   id: number
@@ -33,11 +34,14 @@ type NodePropsNoSetters = Omit<NodeProps, 'mousePos' | 'select' | 'newLine' | 'c
 
 function App() {
 
+  const detectDevice = useMobileDetect()
+
   const [pan, setPan] = useState(false)
 
+  const [mouseIn, setMouseIn] = useState<boolean>(true)
   const [mousePos, setmousePos] = useState<number[]>([])
   const [show, setShow] = useState(false)
-  const [acceleration, setAcceleration] = useState<number[]>([0, 0])
+  const [acceleration, setAcceleration] = useState<number[]>([-vw(200) / 2, -vh(200) / 2])
 
   const [nodesProps, setNodesProps] = useState<NodePropsNoSetters[]>([])
   const [selected, setSelected] = useState(-1)
@@ -48,24 +52,17 @@ function App() {
   const theme = useTheme();
   const { height, width } = useWindowDimensions();
 
-  const panSpeed = 2
+  const panSpeed = 10
 
 
   useEffect(() => {
-
-    if (pan) {
-      if (mousePos[0] < getPercent(30, width)) {
-        setAcceleration([acceleration[0] - panSpeed, acceleration[1]])
-      } else if (mousePos[0] > width - getPercent(30, width)) {
-        setAcceleration([acceleration[0] + panSpeed, acceleration[1]])
-      } else if (mousePos[1] < getPercent(30, height)) {
-        setAcceleration([acceleration[0], acceleration[1] - panSpeed])
-      } else if (mousePos[1] > height - getPercent(30, height)) {
-        setAcceleration([acceleration[0], acceleration[1] + panSpeed])
-      }
+    document.documentElement.addEventListener('mouseleave', () => setMouseIn(false))
+    document.documentElement.addEventListener('mouseenter', () => setMouseIn(true))
+    return () => {
+      document.documentElement.removeEventListener('mouseleave', () => setMouseIn(false))
+      document.documentElement.removeEventListener('mouseenter', () => setMouseIn(true))
     }
-
-  })
+  }, [mousePos])
 
   function newNode(nodeProps: NodePropsNoSetters) {
 
@@ -83,21 +80,29 @@ function App() {
 
   function keyDown(e: KeyboardEvent<HTMLDivElement>) {
 
-    if (draggingID !== '') return
+    if (draggingID !== '' || !mouseIn) return
 
-    if (e.key === 'Shift') {
-      setPan(true)
+    if (e.key === 'Control') {
+      if (mousePos[0] < getPercent(20, width)) {
+        setAcceleration([acceleration[0] + panSpeed, acceleration[1]])
+      } else if (mousePos[0] > width - getPercent(20, width)) {
+        setAcceleration([acceleration[0] - panSpeed, acceleration[1]])
+      } else if (mousePos[1] < getPercent(20, height)) {
+        setAcceleration([acceleration[0], acceleration[1] + panSpeed])
+      } else if (mousePos[1] > height - getPercent(20, height)) {
+        setAcceleration([acceleration[0], acceleration[1] - panSpeed])
+      }
     }
 
   }
 
   function keyUp(e: KeyboardEvent<HTMLDivElement>) {
 
-    if (draggingID !== '') return
+    if (draggingID !== '' || !mouseIn) return
 
     if (e.key === 'Delete' && selected !== -1) {
       setNodesProps(nodesProps.filter(prop => prop.id !== selected))
-    } else if (e.key === 'Shift') {
+    } else if (e.key === 'Control') {
       setPan(false)
     }
 
@@ -164,11 +169,13 @@ function App() {
         tabIndex={0}
         style={{
           position: 'absolute',
-          top: acceleration[1],
-          left: acceleration[0],
-          /*border: '1px solid ' + theme.palette.primary.main,*/
-          width: '100vw',
-          height: '100vh',
+          top: setPosition(acceleration)[1],
+          left: setPosition(acceleration)[0],
+          width: '200vw',
+          height: '200vh',
+          backgroundImage: 'url(' + require('../bg.png') + ')',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '5%'
         }}
         onMouseMove={mousePosition}
         onClick={click}
@@ -191,6 +198,7 @@ function App() {
           <Node //always pass functions here to get the latest states
             key={index}
             mousePos={mousePos}
+            acceleration={acceleration}
             select={setSelected}
             newLine={newLine}
             connect={connect}
@@ -207,8 +215,42 @@ function App() {
   )
 }
 
+function setPosition(acc: number[]) {
+  
+  const newAcc = []
+
+  if (acc[1] < -vh(200) / 2) {
+    newAcc[1] = -vh(200) / 2
+  } else if (acc[1] > 0) {
+    acc[1] = 0
+  } else {
+    newAcc[1] = acc[1]
+  }
+
+  if (acc[0] < -vw(200) / 2) {
+    newAcc[0] = -vh(200) / 2
+  } else if (acc[0] > 0) {
+    acc[0] = 0
+  } else {
+    newAcc[0] = acc[0]
+  }
+  console.log(newAcc)
+  return newAcc
+
+}
+
 function getPercent(percent: number, value: number) {
   return (percent * value) / 100
+}
+
+function vh(v: number) {
+  const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  return (v * h) / 100;
+}
+
+function vw(v: number) {
+  const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  return (v * w) / 100;
 }
 
 export default App;
