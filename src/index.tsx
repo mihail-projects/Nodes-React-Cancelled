@@ -15,6 +15,10 @@ import { green, purple } from '@mui/material/colors';
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+        background: {
+            default: '#121212',
+            paper: '#272727'
+        },
         primary: {
             main: purple[300]
         },

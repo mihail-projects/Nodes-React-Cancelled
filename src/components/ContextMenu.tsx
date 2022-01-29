@@ -16,7 +16,7 @@ function ContextMenu(props: MenuProps) {
 
     const [showUI, setShowUI] = useState(false)
     const [showFunc, setShowFunc] = useState(false)
-    const [pos, setPos] = useState <number[]>([])
+    const [pos, setPos] = useState<number[]>([])
 
     useEffect(() => {
         window.addEventListener('click', () => change(false, false))
@@ -37,18 +37,18 @@ function ContextMenu(props: MenuProps) {
     if (props.show) {
         return (
             <>
-                <Paper id='menu' style={{ top: pos[1] + 'px', left: pos[0] + 'px' }}>
+                <Paper id='menu' variant='outlined' sx={{ top: pos[1] + 'px', left: pos[0] + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='primary' onMouseOver={() => change(true, false)}>Interface ➤</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onMouseOver={() => change(false, true)}>Functionality ➤</Typography>
                 </Paper>
-                <Paper id='menu' style={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: pos[1] + 'px', left: pos[0] + 125 + 'px' }}>
+                <Paper id='menu' variant='elevation' sx={{ position: 'absolute', visibility: showUI ? 'visible' : 'hidden', top: pos[1] + 5 + 'px', left: pos[0] + 115 + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => props.add(templates[7].textTemplate)}>Text</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => props.add(templates[8].eventTemplate)}>Event</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => props.add(templates[9].mediaTemplate)}>Media</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => props.add(templates[10].tweenTemplate)}>Tween</Typography>
                     <Typography id='option' variant="subtitle2" color='primary' onClick={() => props.add(templates[12].containerTemplate)}>Container</Typography>
                 </Paper>
-                <Paper id='menu' style={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: pos[1] + 25 + 'px', left: pos[0] + 125 + 'px' }}>
+                <Paper id='menu' variant='elevation' sx={{ position: 'absolute', visibility: showFunc ? 'visible' : 'hidden', top: pos[1] + 30 + 'px', left: pos[0] + 115 + 'px' }}>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => props.add(templates[0].ifTemplate)}>If</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => props.add(templates[1].forTemplate)}>For</Typography>
                     <Typography id='option' variant="subtitle2" color='secondary' onClick={() => props.add(templates[2].classTemplate)}>Class</Typography>

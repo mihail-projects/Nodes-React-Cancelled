@@ -34,7 +34,7 @@ function Node(props: NodeProps) {
 
         <Draggable drag={drag} mousePos={props.mousePos} acceleration={props.acceleration}>
 
-            <Paper id='node' onMouseOver={() => props.select(props.id)} onMouseOut={() => props.select(-1)}>
+            <Paper id='node' variant='outlined' onMouseOver={() => props.select(props.id)} onMouseOut={() => props.select(-1)}>
 
                 <Typography id='title' variant="subtitle1" color='text.primary' onMouseDown={() => setDrag(true)} onMouseUp={() => setDrag(false)}>{props.title}</Typography>
 

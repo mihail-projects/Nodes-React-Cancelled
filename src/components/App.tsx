@@ -13,6 +13,8 @@ import Node from './Node'
 import useTheme from '@mui/material/styles/useTheme'
 import produce from 'immer'
 import useMobileDetect from './Hooks/DetectDevice';
+import Alert from '@mui/material/Alert'
+import useCookies from 'react-cookie/es6/useCookies'
 
 type NodeProps = {
   id: number
@@ -31,10 +33,12 @@ type NodeProps = {
 }
 
 type NodePropsNoSetters = Omit<NodeProps, 'mousePos' | 'select' | 'newLine' | 'connect'>
+type AlertSeverity = 'error' | 'success' | 'info' | 'warning' | undefined;
 
 function App() {
 
   const detectDevice = useMobileDetect()
+  const [cookies, setCookie, removeCookie] = useCookies(['firstTime']);
 
   const [pan, setPan] = useState(false)
 
@@ -54,6 +58,13 @@ function App() {
 
   const panSpeed = 10
 
+  const [alert, setAlert] = useState(false)
+  const [alertText, setAlertText] = useState('')
+  const [alertSeverity, setAlertSeverity] = useState<AlertSeverity>('info')
+
+  useEffect(()=>{
+    showAlert('Welcome to Node! I will guide you during your first building experience :)', 'info')
+  }, [])
 
   useEffect(() => {
     document.documentElement.addEventListener('mouseleave', () => setMouseIn(false))
@@ -63,6 +74,12 @@ function App() {
       document.documentElement.removeEventListener('mouseenter', () => setMouseIn(true))
     }
   }, [mousePos])
+
+  function showAlert(message: string, severity: AlertSeverity) {
+    setAlertText(message)
+    setAlertSeverity(severity)
+    setAlert(true)
+  }
 
   function newNode(nodeProps: NodePropsNoSetters) {
 
@@ -117,6 +134,7 @@ function App() {
   }
 
   function rightClick(e: MouseEvent<HTMLDivElement>) {
+    if (draggingID !== '' || !mouseIn) return
     e.preventDefault()
     draggingID != '' ? disconnect() : setShow(true)
   }
@@ -173,9 +191,9 @@ function App() {
           left: setPosition(acceleration)[0],
           width: '200vw',
           height: '200vh',
-          backgroundImage: 'url(' + require('../bg.png') + ')',
+          /*backgroundImage: 'url(' + require('../bg.png') + ')',
           backgroundRepeat: 'repeat',
-          backgroundSize: '5%'
+          backgroundSize: '2vw'*/
         }}
         onMouseMove={mousePosition}
         onClick={click}
@@ -210,13 +228,14 @@ function App() {
 
       <ContextMenu show={show} mousePos={mousePos} add={newNode} />
       <TopBar projectName='Project Name' />
+      {alert ? <Alert sx={{ position: 'absolute', top: '95px', left: '10px' }} onClose={() => setAlert(false)} severity={alertSeverity}>{alertText}</Alert> : null}
 
     </>
   )
 }
 
 function setPosition(acc: number[]) {
-  
+
   const newAcc = []
 
   if (acc[1] < -vh(200) / 2) {
@@ -234,7 +253,7 @@ function setPosition(acc: number[]) {
   } else {
     newAcc[0] = acc[0]
   }
-  console.log(newAcc)
+
   return newAcc
 
 }
