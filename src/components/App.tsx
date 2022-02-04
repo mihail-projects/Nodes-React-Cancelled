@@ -15,6 +15,8 @@ import produce from 'immer'
 import useMobileDetect from './Hooks/DetectDevice';
 import Alert from '@mui/material/Alert'
 import useCookies from 'react-cookie/es6/useCookies'
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography'
 
 type NodeProps = {
   id: number
@@ -35,10 +37,11 @@ type NodeProps = {
 type NodePropsNoSetters = Omit<NodeProps, 'mousePos' | 'select' | 'newLine' | 'connect'>
 type AlertSeverity = 'error' | 'success' | 'info' | 'warning' | undefined;
 
+
 function App() {
 
   const detectDevice = useMobileDetect()
-  const [cookies, setCookie, removeCookie] = useCookies(['firstTime']);
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
 
   const [pan, setPan] = useState(false)
 
@@ -60,23 +63,29 @@ function App() {
 
   const [alert, setAlert] = useState(false)
   const [alertText, setAlertText] = useState('')
+  const [alertLink, setAlertLink] = useState('')
   const [alertSeverity, setAlertSeverity] = useState<AlertSeverity>('info')
 
-  useEffect(()=>{
-    showAlert('Welcome to Node! I will guide you during your first building experience :)', 'info')
+
+  useEffect(() => {
+    showAlert(`Welcome to Node! I will be guiding you through your first building experience :)`, '', 'info')
   }, [])
 
   useEffect(() => {
+
     document.documentElement.addEventListener('mouseleave', () => setMouseIn(false))
     document.documentElement.addEventListener('mouseenter', () => setMouseIn(true))
+
     return () => {
       document.documentElement.removeEventListener('mouseleave', () => setMouseIn(false))
       document.documentElement.removeEventListener('mouseenter', () => setMouseIn(true))
     }
+
   }, [mousePos])
 
-  function showAlert(message: string, severity: AlertSeverity) {
+  function showAlert(message: string, link: string, severity: AlertSeverity) {
     setAlertText(message)
+    setAlertLink(link)
     setAlertSeverity(severity)
     setAlert(true)
   }
@@ -134,9 +143,9 @@ function App() {
   }
 
   function rightClick(e: MouseEvent<HTMLDivElement>) {
-    if (draggingID !== '' || !mouseIn) return
+    if (!mouseIn) return
     e.preventDefault()
-    draggingID != '' ? disconnect() : setShow(true)
+    draggingID == '' ? setShow(true) : disconnect()
   }
 
   function newLine(id: string) {
@@ -151,6 +160,8 @@ function App() {
   }
 
   function connect(id: string) {
+
+    if (draggingID == '') return
 
     console.log('Connected')
     setConnections(connections.map(([a, b]) => a != '' && b == '' ? [a, id] : [a, b]))
@@ -228,7 +239,13 @@ function App() {
 
       <ContextMenu show={show} mousePos={mousePos} add={newNode} />
       <TopBar projectName='Project Name' />
-      {alert ? <Alert sx={{ position: 'absolute', top: '95px', left: '10px' }} onClose={() => setAlert(false)} severity={alertSeverity}>{alertText}</Alert> : null}
+      {alert ? <Alert
+        sx={{ position: 'absolute', top: '95px', left: '10px', userSelect: 'none' }}
+        onClose={() => setAlert(false)}
+        severity={alertSeverity}>
+        <Typography variant='subtitle1'>{alertText}</Typography>
+        {alertLink != '' ? <Link variant='subtitle1' href={alertLink}>Docs</Link> : null}
+      </Alert> : null}
 
     </>
   )
@@ -272,4 +289,4 @@ function vw(v: number) {
   return (v * w) / 100;
 }
 
-export default App;
+export default App

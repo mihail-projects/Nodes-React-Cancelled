@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-import Text from './properties/Text'
+import Text from './NodeProperties/Text'
 
 export const templates = [
     {
